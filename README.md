@@ -1,3 +1,19 @@
+Note on the task:
+
+Didn't manage to display text for the last confirm password field so I have the check printing to console that the passwords do not match.
+
+The file that I created is in "my-login.html".
+
+
+
+
+
+
+
+
+
+
+
 # Polymer App Toolbox - Starter Kit
 
 [![Build Status](https://travis-ci.org/PolymerElements/polymer-starter-kit.svg?branch=master)](https://travis-ci.org/PolymerElements/polymer-starter-kit)
