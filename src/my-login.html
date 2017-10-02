@@ -1,0 +1,113 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-login">
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+
+                padding: 10px;
+            }
+        </style>
+
+        <div class="loginForm">
+            <div class="circle">:)</div>
+            <h1 class="loginHeader">Please Log In</h1>
+
+            <iron-form class="ironForm">
+
+                <form method="get" id="loginForm">
+                    <paper-input label="Email"
+                                 type="email"
+                                 id="email"
+                                 required
+                                 auto-validate
+                                 error-message="Please submit a valid email">
+                    </paper-input>
+                    <paper-input type='password'
+                                 label="Password"
+                                 id="password"
+                                 required
+                                 minlength = 8
+                                 auto-validate
+                                 error-message="Must be longer than 8 characters">
+                    </paper-input>
+
+
+                    <passwords-validator
+                                         id="pvalid"
+                                         validator-name="confirmPassword_validator">
+                    </passwords-validator>
+
+
+                    <paper-input label="Confirm Password"
+                                 class="lowestInput" id="confirmPassword"
+                                 required
+                                 validator="confirmPassword_validator"
+                                 error-message="Passwords do not match"
+                                 >
+                    </paper-input>
+                </form>
+            </iron-form>
+
+            <paper-button raised 
+                          id="submitButton" 
+                          type="submit" 
+                          on-click="_onSubmit">
+                Submit
+            </paper-button>
+
+
+        </div>
+    </template>
+
+    <script>
+        class MyLogin extends Polymer.Element {
+            static get is() { return 'my-login'; }
+            _onSubmit() {
+                if(                this.$.pvalid.validate(this.$.password.value, this.$.confirmPassword.value) && this.$.password.validate()&& 
+                   this.$.email.validate()
+                  ) {
+                    this.$.loginForm.submit();
+                } else {
+                    console.log("Passwords do not match");
+                }
+            }
+        }
+
+        window.customElements.define(MyLogin.is, MyLogin);
+
+
+    </script>
+</dom-module>
+
+<dom-module id="passwords-validator">
+    <script>
+        (function() {
+            'use strict';
+            Polymer({
+                is: 'passwords-validator',
+                behaviors: [
+                    Polymer.IronValidatorBehavior
+                ],
+                validate: function(value, value2){
+                    return value == value2;
+                }
+            })
+        })()
+    </script>
+</dom-module>
